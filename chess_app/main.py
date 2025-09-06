@@ -1,6 +1,50 @@
 import streamlit as st
 from game import Game
 
+import streamlit as st
+from game import Game
+
+st.set_page_config(layout="wide")
+st.title("🧨 Cờ Tướng Web App")
+
+# Khởi tạo game nếu chưa có
+if "game" not in st.session_state:
+    st.session_state.game = Game()
+if "selected_piece_pos" not in st.session_state:
+    st.session_state.selected_piece_pos = None
+if "valid_moves" not in st.session_state:
+    st.session_state.valid_moves = []
+
+game = st.session_state.game
+
+# Hiển thị bàn cờ
+for row in range(10):
+    cols = st.columns(9)
+    for col in range(9):
+        pos = (row, col)
+        piece = game.board.get_piece(row, col)
+        button_label = " "  # placeholder
+
+        if piece:
+            img_path = f"assets/{piece.color}/{piece.name}.png"
+            cols[col].image(img_path, use_column_width=True)
+            if st.session_state.selected_piece_pos == pos:
+                cols[col].markdown("✅", unsafe_allow_html=True)
+            if cols[col].button("Chọn", key=f"select_{row}_{col}"):
+                if piece.color == game.turn:
+                    st.session_state.selected_piece_pos = pos
+                    st.session_state.valid_moves = piece.get_valid_moves(game.board)
+        else:
+            highlight = "🟩" if pos in st.session_state.valid_moves else ""
+            if cols[col].button(highlight or " ", key=f"move_{row}_{col}"):
+                if st.session_state.selected_piece_pos and pos in st.session_state.valid_moves:
+                    success = game.make_move(st.session_state.selected_piece_pos, pos)
+                    if success:
+                        st.session_state.selected_piece_pos = None
+                        st.session_state.valid_moves = []
+                        st.experimental_rerun()
+
+
 st.set_page_config(layout="wide")
 game = Game()
 
