@@ -8,6 +8,42 @@ from pieces.phao import Phao
 from pieces.tot import Tot
 
 
+def setup_initial_position(self):
+    # Quân đen (black)
+    self.grid[0] = [
+        Xe("xe", "black", (0, 0)),
+        Ma("ma", "black", (0, 1)),
+        Tuong("tuong", "black", (0, 2)),
+        Si("si", "black", (0, 3)),
+        Tuong("tuong", "black", (0, 4)),
+        Si("si", "black", (0, 5)),
+        Tuong("tuong", "black", (0, 6)),
+        Ma("ma", "black", (0, 7)),
+        Xe("xe", "black", (0, 8))
+    ]
+    self.grid[2][1] = Phao("phao", "black", (2, 1))
+    self.grid[2][7] = Phao("phao", "black", (2, 7))
+    for i in range(0, 9, 2):
+        self.grid[3][i] = Tot("tot", "black", (3, i))
+
+    # Quân đỏ (red)
+    self.grid[9] = [
+        Xe("xe", "red", (9, 0)),
+        Ma("ma", "red", (9, 1)),
+        Tuong("tuong", "red", (9, 2)),
+        Si("si", "red", (9, 3)),
+        Tuong("tuong", "red", (9, 4)),
+        Si("si", "red", (9, 5)),
+        Tuong("tuong", "red", (9, 6)),
+        Ma("ma", "red", (9, 7)),
+        Xe("xe", "red", (9, 8))
+    ]
+    self.grid[7][1] = Phao("phao", "red", (7, 1))
+    self.grid[7][7] = Phao("phao", "red", (7, 7))
+    for i in range(0, 9, 2):
+        self.grid[6][i] = Tot("tot", "red", (6, i))
+
+
 class Board:
     def __init__(self):
         self.grid = [[None for _ in range(9)] for _ in range(10)]
