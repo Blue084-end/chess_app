@@ -6,6 +6,15 @@ from game import Game
 
 
 
+if game.winner:
+    st.success(f"🎉 {game.winner.upper()} thắng ván này!")
+    if st.button("Chơi lại"):
+        game.restart()
+        st.session_state.selected_piece_pos = None
+        st.session_state.valid_moves = []
+        st.experimental_rerun()
+
+
 if st.button("↩️ Undo"):
     if game.undo():
         st.session_state.selected_piece_pos = None
