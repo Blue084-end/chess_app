@@ -8,6 +8,7 @@ from game import Game
 
 
 
+
 import datetime
 
 if "red_time" not in st.session_state:
@@ -17,14 +18,29 @@ if "black_time" not in st.session_state:
 if "turn_start_time" not in st.session_state:
     st.session_state.turn_start_time = datetime.datetime.now()
 
-def update_time():
-    now = datetime.datetime.now()
-    elapsed = (now - st.session_state.turn_start_time).total_seconds()
-    if game.turn == "red":
-        st.session_state.red_time -= elapsed
-    else:
-        st.session_state.black_time -= elapsed
-    st.session_state.turn_start_time = now
+if st.button("🤝 Cầu hòa"):
+    st.session_state.draw_offer = game.turn
+
+if "draw_offer" in st.session_state:
+    if st.session_state.draw_offer != game.turn:
+        st.info(f"{st.session_state.draw_offer.upper()} đề nghị hòa")
+        if st.button("Đồng ý hòa"):
+            game.winner = "Hòa"
+            st.experimental_rerun()
+        if st.button("Từ chối"):
+            del st.session_state.draw_offer
+
+
+
+import datetime
+
+if "red_time" not in st.session_state:
+    st.session_state.red_time = 600  # 10 phút
+if "black_time" not in st.session_state:
+    st.session_state.black_time = 600
+if "turn_start_time" not in st.session_state:
+    st.session_state.turn_start_time = datetime.datetime.now()
+
 
 
 
