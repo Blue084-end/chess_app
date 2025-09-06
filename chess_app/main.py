@@ -8,6 +8,27 @@ from game import Game
 
 
 
+import datetime
+
+if "red_time" not in st.session_state:
+    st.session_state.red_time = 600  # 10 phút
+if "black_time" not in st.session_state:
+    st.session_state.black_time = 600
+if "turn_start_time" not in st.session_state:
+    st.session_state.turn_start_time = datetime.datetime.now()
+
+def update_time():
+    now = datetime.datetime.now()
+    elapsed = (now - st.session_state.turn_start_time).total_seconds()
+    if game.turn == "red":
+        st.session_state.red_time -= elapsed
+    else:
+        st.session_state.black_time -= elapsed
+    st.session_state.turn_start_time = now
+
+
+
+
 mode = st.radio("Chế độ chơi", ["Người vs Người", "Người vs Máy"])
 st.session_state.mode = mode
 
