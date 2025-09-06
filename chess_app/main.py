@@ -4,6 +4,21 @@ from game import Game
 import streamlit as st
 from game import Game
 
+
+
+if st.button("↩️ Undo"):
+    if game.undo():
+        st.session_state.selected_piece_pos = None
+        st.session_state.valid_moves = []
+        st.experimental_rerun()
+
+if st.button("↪️ Redo"):
+    if game.redo():
+        st.session_state.selected_piece_pos = None
+        st.session_state.valid_moves = []
+        st.experimental_rerun()
+
+
 st.set_page_config(layout="wide")
 st.title("🧨 Cờ Tướng Web App")
 
