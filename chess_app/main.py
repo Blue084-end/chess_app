@@ -30,6 +30,25 @@ if "draw_offer" in st.session_state:
         if st.button("Từ chối"):
             del st.session_state.draw_offer
 
+# Người chơi xin thua
+if st.button("🏳️ Xin thua"):
+    game.winner = "black" if game.turn == "red" else "red"
+    st.experimental_rerun()
+
+
+# Khởi tạo màu quân nếu chưa có
+if "player_color" not in st.session_state:
+    st.session_state.player_color = "red"
+
+# Hàm bắt đầu lại ván mới và đổi màu quân
+def restart_game():
+    game.restart()
+    st.session_state.player_color = "black" if st.session_state.player_color == "red" else "red"
+    st.session_state.selected_piece_pos = None
+    st.session_state.valid_moves = []
+    st.experimental_rerun()
+
+
 
 
 import datetime
