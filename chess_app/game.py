@@ -46,6 +46,16 @@ def load_game(self, filename="saved_game.json"):
 
 
 
+def update_stats(self):
+    # Tăng số trận đã chơi cho cả hai bên
+    st.session_state.player_stats["Az"]["played"] += 1
+    st.session_state.player_stats["Bot"]["played"] += 1
+
+    # Cập nhật số trận thắng
+    if self.winner == "Az":
+        st.session_state.player_stats["Az"]["won"] += 1
+    elif self.winner == "Bot":
+        st.session_state.player_stats["Bot"]["won"] += 1
 
 
 
