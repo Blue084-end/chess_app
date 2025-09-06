@@ -6,6 +6,25 @@ from game import Game
 
 
 
+
+
+import json
+
+if st.button("💾 Lưu ván chơi"):
+    saved_data = game.serialize()
+    st.session_state.saved_game = saved_data
+    st.success("Đã lưu ván chơi vào bộ nhớ tạm.")
+
+
+
+if "saved_game" in st.session_state:
+    if st.button("📂 Tải lại ván chơi"):
+        game.load_from_data(st.session_state.saved_game)
+        st.session_state.selected_piece_pos = None
+        st.session_state.valid_moves = []
+        st.experimental_rerun()
+
+
 if game.winner:
     st.success(f"🎉 {game.winner.upper()} thắng ván này!")
     if st.button("Chơi lại"):
