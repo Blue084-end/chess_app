@@ -6,6 +6,32 @@ import copy
 
 
 
+
+
+import random
+
+def get_ai_move(self):
+    all_moves = []
+    for row in self.board.grid:
+        for piece in row:
+            if piece and piece.color == self.turn:
+                moves = piece.get_valid_moves(self.board)
+                for move in moves:
+                    all_moves.append((piece.position, move))
+    if all_moves:
+        return random.choice(all_moves)
+    return None
+
+
+def make_ai_move(self):
+    move = self.get_ai_move()
+    if move:
+        from_pos, to_pos = move
+        self.move_piece(from_pos, to_pos)
+
+
+
+
 def serialize(self):
     data = {
         "turn": self.turn,
