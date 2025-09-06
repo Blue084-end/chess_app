@@ -3,6 +3,64 @@
 from board import Board
 import copy
 
+
+
+
+class Game:
+    def __init__(self):
+        self.board = Board()
+        self.turn = "red"
+        self.history = []
+        self.redo_stack = []
+        self.winner = None
+
+    def check_game_over(self):
+        # Kiểm tra xem Tướng còn tồn tại không
+        red_alive = False
+        black_alive = False
+        for row in self.board.grid:
+            for piece in row:
+                if piece and piece.name == "tuong":
+                    if piece.color == "red":
+                        red_alive = True
+                    elif piece.color == "black":
+                        black_alive = True
+
+        if not red_alive:
+            self.winner = "black"
+        elif not black_alive:
+            self.winner = "red"
+
+
+def make_move(self, from_pos, to_pos):
+    fx, fy = from_pos
+    tx, ty = to_pos
+    piece = self.board.get_piece(fx, fy)
+
+    if not piece or piece.color != self.turn:
+        return False
+
+    valid_moves = piece.get_valid_moves(self.board)
+    if (tx, ty) not in valid_moves:
+        return False
+
+    self.history.append({
+        "grid": clone_grid(self.board.grid),
+        "turn": self.turn
+    })
+    self.redo_stack.clear()
+
+    self.board.move_piece(from_pos, to_pos)
+    self.check_game_over()
+    if not self.winner:
+        self.switch_turn()
+    return True
+
+
+
+
+
+
 def clone_grid(grid):
     return [[copy.deepcopy(cell) for cell in row] for row in grid]
 
