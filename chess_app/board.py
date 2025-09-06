@@ -1,3 +1,13 @@
+# board.py
+
+from pieces.xe import Xe
+from pieces.ma import Ma
+from pieces.tuong import Tuong
+from pieces.si import Si
+from pieces.phao import Phao
+from pieces.tot import Tot
+
+
 class Board:
     def __init__(self):
         self.grid = [[None for _ in range(9)] for _ in range(10)]
