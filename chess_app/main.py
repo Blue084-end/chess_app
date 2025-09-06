@@ -7,6 +7,19 @@ from game import Game
 
 
 
+st.subheader("📜 Lịch sử ván chơi")
+
+if game.move_history:
+    for i, move in enumerate(game.move_history, 1):
+        from_pos, to_pos, piece_name = move
+        st.markdown(f"**{i}.** {piece_name} từ `{from_pos}` đến `{to_pos}`")
+else:
+    st.write("Chưa có nước đi nào.")
+
+if st.button("🔎 Phân tích ván chơi"):
+    analyze_game(game.move_history)
+
+
 
 
 import datetime
