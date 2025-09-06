@@ -4,6 +4,15 @@ from board import Board
 import copy
 
 
+def update_time(self):
+    import datetime
+    now = datetime.datetime.now()
+    elapsed = (now - st.session_state.turn_start_time).total_seconds()
+    if self.turn == "red":
+        st.session_state.red_time -= elapsed
+    else:
+        st.session_state.black_time -= elapsed
+    st.session_state.turn_start_time = now
 
 
 
