@@ -6,6 +6,54 @@ import copy
 
 
 
+def serialize(self):
+    data = {
+        "turn": self.turn,
+        "grid": [
+            [
+                {
+                    "name": piece.name,
+                    "color": piece.color,
+                    "position": piece.position
+                } if piece else None
+                for piece in row
+            ]
+            for row in self.board.grid
+        ]
+    }
+    return data
+
+def load_from_data(self, data):
+    from pieces.xe import Xe
+    from pieces.ma import Ma
+    from pieces.tuong import Tuong
+    from pieces.si import Si
+    from pieces.phao import Phao
+    from pieces.tot import Tot
+
+    name_map = {
+        "xe": Xe,
+        "ma": Ma,
+        "tuong": Tuong,
+        "si": Si,
+        "phao": Phao,
+        "tot": Tot
+    }
+
+    self.turn = data["turn"]
+    self.board.grid = []
+    for row in data["grid"]:
+        new_row = []
+        for cell in row:
+            if cell:
+                cls = name_map[cell["name"]]
+                new_row.append(cls(cell["name"], cell["color"], tuple(cell["position"])))
+            else:
+                new_row.append(None)
+        self.board.grid.append(new_row)
+
+
+
 class Game:
     def __init__(self):
         self.board = Board()
