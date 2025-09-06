@@ -7,6 +7,24 @@ from game import Game
 
 
 
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("💾 Lưu ván chơi"):
+        game.save_game()
+        st.success("Đã lưu ván chơi!")
+
+with col2:
+    if st.button("📂 Tải lại ván chơi"):
+        game.load_game()
+        st.success("Đã tải lại ván chơi!")
+        st.experimental_rerun()
+
+filename = st.text_input("Tên file lưu", value="saved_game.json")
+if st.button("💾 Lưu ván chơi"):
+    game.save_game(filename)
+
+
 st.subheader("📜 Lịch sử ván chơi")
 
 if game.move_history:
