@@ -7,6 +7,46 @@ import copy
 
 
 
+import json
+
+def save_game(self, filename="saved_game.json"):
+    data = {
+        "board": [[piece.name if piece else None for piece in row] for row in self.board],
+        "turn": self.turn,
+        "move_history": self.move_history,
+        "red_time": st.session_state.red_time,
+        "black_time": st.session_state.black_time,
+        "player_color": st.session_state.player_color,
+    }
+    with open(filename, "w") as f:
+        json.dump(data, f)
+
+def load_game(self, filename="saved_game.json"):
+    import os
+    if not os.path.exists(filename):
+        st.warning("Không tìm thấy file lưu ván chơi.")
+        return
+
+    with open(filename, "r") as f:
+        data = json.load(f)
+
+    # Khôi phục bàn cờ
+    for i in range(10):
+        for j in range(9):
+            name = data["board"][i][j]
+            self.board[i][j] = self.create_piece(name, (i, j)) if name else None
+
+    self.turn = data["turn"]
+    self.move_history = data["move_history"]
+    st.session_state.red_time = data["red_time"]
+    st.session_state.black_time = data["black_time"]
+    st.session_state.player_color = data["player_color"]
+    st.session_state.turn_start_time = datetime.datetime.now()
+
+
+
+
+
 
 
 self.move_history = []  # Khởi tạo danh sách lịch sử nước đi
