@@ -7,6 +7,50 @@ import copy
 
 
 
+def evaluate_board(self):
+    values = {
+        "tot": 1,
+        "phao": 3,
+        "ma": 3,
+        "xe": 5,
+        "si": 2,
+        "tuong": 100
+    }
+    score = 0
+    for row in self.board.grid:
+        for piece in row:
+            if piece:
+                val = values.get(piece.name, 0)
+                if piece.color == "do":
+                    score += val
+                else:
+                    score -= val
+    return score
+
+
+
+def get_best_move(self):
+    best_score = float("inf")
+    best_move = None
+    for row in self.board.grid:
+        for piece in row:
+            if piece and piece.color == self.turn:
+                moves = piece.get_valid_moves(self.board)
+                for move in moves:
+                    backup = self.board.clone()
+                    self.move_piece(piece.position, move)
+                    score = self.evaluate_board()
+                    self.board = backup
+                    if score < best_score:
+                        best_score = score
+                        best_move = (piece.position, move)
+    return best_move
+
+
+
+
+
+
 
 import random
 
