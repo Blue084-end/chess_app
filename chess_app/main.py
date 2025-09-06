@@ -4,6 +4,13 @@ from game import Game
 import streamlit as st
 from game import Game
 
+
+components.html("""
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+""", height=0)
+
+
+
 # Khởi tạo thống kê nếu chưa có
 if "player_stats" not in st.session_state:
     st.session_state.player_stats = {
@@ -50,6 +57,35 @@ else:
 
 if st.button("🔎 Phân tích ván chơi"):
     analyze_game(game.move_history)
+
+import streamlit.components.v1 as components
+
+def play_sound(result):
+    if result == "win":
+        sound_url = "https://www.soundjay.com/button/sounds/button-3.mp3"
+    elif result == "lose":
+        sound_url = "https://www.soundjay.com/button/sounds/button-10.mp3"
+    else:
+        sound_url = "https://www.soundjay.com/button/sounds/button-16.mp3"
+
+    components.html(f"""
+        <audio autoplay>
+            <source src="{sound_url}" type="audio/mpeg">
+        </audio>
+    """, height=0)
+
+def show_confetti():
+    st.markdown("""
+        <script>
+        confetti();
+        </script>
+    """, unsafe_allow_html=True)
+
+
+
+
+
+
 
 
 
