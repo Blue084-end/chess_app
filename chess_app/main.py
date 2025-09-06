@@ -4,7 +4,21 @@ from game import Game
 import streamlit as st
 from game import Game
 
+# Khởi tạo thống kê nếu chưa có
+if "player_stats" not in st.session_state:
+    st.session_state.player_stats = {
+        "Az": {"played": 0, "won": 0},
+        "Bot": {"played": 0, "won": 0}
+    }
+    
 
+st.subheader("🏆 Bảng xếp hạng người chơi")
+
+for player, stats in st.session_state.player_stats.items():
+    played = stats["played"]
+    won = stats["won"]
+    win_rate = f"{(won / played * 100):.1f}%" if played > 0 else "0%"
+    st.markdown(f"**{player}** — 🕹️ {played} trận | 🏅 {won} thắng | 📊 Tỷ lệ: {win_rate}")
 
 
 col1, col2 = st.columns(2)
