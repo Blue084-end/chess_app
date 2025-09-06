@@ -8,6 +8,16 @@ from game import Game
 
 
 
+mode = st.radio("Chế độ chơi", ["Người vs Người", "Người vs Máy"])
+st.session_state.mode = mode
+
+
+if st.session_state.mode == "Người vs Máy" and game.turn == "den":
+    game.make_ai_move()
+    st.experimental_rerun()
+
+
+
 import json
 
 if st.button("💾 Lưu ván chơi"):
