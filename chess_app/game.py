@@ -4,6 +4,17 @@ from board import Board
 import copy
 
 
+
+
+
+
+
+self.move_history = []  # Khởi tạo danh sách lịch sử nước đi
+
+self.move_history.append((from_pos, to_pos, piece.name))
+
+
+
 def update_time(self):
     import datetime
     now = datetime.datetime.now()
